@@ -3,7 +3,7 @@ SequenceClassification, TokenClassification 학습 시 기존 Dense/linear 를 C
 
 ## Classifier Fine-tuning의 이해
 ### 학습 형태의 이해
-![image](https://user-images.githubusercontent.com/45644085/169961174-e0e7d772-fdb4-4d51-a67a-fd6c7c692cbc.png)
+![image](https://user-images.githubusercontent.com/45644085/169961080-1e8f3f67-cbbb-4a3c-84d9-59b0bb02e322.png)
 
 분류를 위한 학습 시 에 Electra, Bert 모델을 통해 임베딩되어 Linear 를 태우기 전의 형태는 Batch_size X Sequence_lenth X Embedding_size와 같다.
 
@@ -13,7 +13,7 @@ model의 마지막 hidden_state는 model에 input을 넣은 결과 튜플의 첫
 
 해당 last_hidden_state는 Batch_size X Sequence_lenth X Embedding_size의 형태를 가지는데 실제로 한 개의 example(학습 단위 문장 혹은 문단)의 임베딩 값은 Sequence_lenth X Embedding_size 이라고 보면 될 것이다. 
 
-![image](https://user-images.githubusercontent.com/45644085/169961080-1e8f3f67-cbbb-4a3c-84d9-59b0bb02e322.png)
+![image](https://user-images.githubusercontent.com/45644085/169961793-b92431c2-2a79-4ac2-8e1b-248b09b54ec3.png)
 
 "김일훈은 자연어처리 공부를 하는 중이다." 라는 문장이 가지는 임베딩 값은 다음과 같은 형태를 가질 것이다.
 하이퍼파라미터를 통해 최대 문장 길이를 128, Pretrain model을 Base 모델로 사용하여 Embedding size가 768이라고 가정한다면, 
