@@ -5,7 +5,7 @@ SequenceClassification, TokenClassification 학습 시 기존 Dense/linear 를 C
 ### 학습 형태의 이해
 ![image](https://user-images.githubusercontent.com/45644085/169961080-1e8f3f67-cbbb-4a3c-84d9-59b0bb02e322.png)
 
-분류를 위한 학습 시 에 Electra, Bert 모델을 통해 임베딩되어 Linear 를 태우기 전의 형태는 Batch_size X Sequence_lenth X Embedding_size와 같다.
+분류를 위한 학습 시 에 Electra, Bert 모델을 통해 임베딩되어 Linear 를 통과하기 전의 형태는 Batch_size X Sequence_lenth X Embedding_size와 같다.
 
 학습을 하기 위해 task에 맞추어진 example을 feature로 변경한 후 모델을 통해 나온 hidden_state 중 가장 마지막을 가져온다.
 마지막 hidden_state는 초기의 임베딩 출력에서 각 hidden_state layer를 통과하며 추가된 최종 값을 의미한다. 
@@ -38,11 +38,17 @@ Transformer 계열의 모델에서 sequence 임베딩 정보를 output으로 만
 ### Question_Answering 학습 구조
 일반적인 Sequence Classification과는 달리 나머지 파인튜닝의 경우는 [CLS]토큰이 아닌 모든 토큰의 임베딩을 사용한다.
 어렵게 이유를 생각할 필요는 없다. output 형태가 (sequence_length X 2)가 되어야 하기 때문이다.
-기계독해 학습의 경우는 각 토큰이 답의 시작(start_logits), 답의 끝(end_logits)이 될 확률을 계산하여 답의 시작이 되는 토큰과 답의 끝이 되는 토큰을 찾는 것이다.
-그러므로 모든 토큰의 개수(sequence length)가 각각 2개의 확률을 가지므로 output 형태가 (sequence_length X 2)가 되는 것이다.
+Sequence Classification은 한 Sequence가 라벨 개수만큼의 확률을 계산하면 되므로 Linear를 통과한 output 모양이 label 개수만큼 (1 x 라벨 개수)면 된다.
+반면에 기계독해 학습의 경우는 각 토큰의 답의 시작(start_logits), 답의 끝(end_logits)이 될 확률을 계산하여 답의 시작이 되는 토큰과 답의 끝이 되는 토큰을 찾는 것이다.
+그러므로 모든 토큰의 개수(sequence length)가 각각 2개의 확률을 가지므로 Linear output 형태가 (sequence_length X 2)가 되는 것이다.
 
 학습 형태를 그림으로 설명하자면 다음과 같을 것이다.
 ![image](https://user-images.githubusercontent.com/45644085/169963905-c4742d74-fab1-4a38-b390-c20794ec3f6b.png)
 
+(sequence length x 768) x Linear(768 X2)  = sequence length x 2 가 되는 간단한 구조이다.
+ 
+## 학습 layer 변경해보기 
+기존에 파인 튜닝의 경우 Linear (단순 선형 회귀)만을 사용한 형태이다.
+파인튜닝 학습 형태인 Batch_size X Sequence_lenth X Embedding_size를 이해한다면 LSTM, CNN 등 다른 신경망 layer를 통과시켜서 파인튜닝을 해볼 수 있다.
 
 **modeling_electra.py** 파일 참조
