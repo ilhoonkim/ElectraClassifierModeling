@@ -28,7 +28,8 @@ model의 마지막 hidden_state는 model에 input을 넣은 결과 튜플의 첫
 파인튜닝에서는 Embedding size를 Linear를 통해 label 개수대로 확률을 계산하면 되는 일이다.
 
 만약 긍부정 이진 분류라면 다음과 같은 형태일 것이다.
-![image](https://user-images.githubusercontent.com/45644085/169960505-92ebeb1e-a724-4310-a918-cbb7e5e31bb3.png)
+![image](https://user-images.githubusercontent.com/45644085/169960741-34d3e0f4-44e0-4ee7-b370-403df899235d.png)
 
+해당 형태를 컴퓨팅 사양에 맞게 batch size만큼 수행하는 것이 문장 분류 파인튜닝이다. 
 
 **modeling_electra.py** 파일 참조
