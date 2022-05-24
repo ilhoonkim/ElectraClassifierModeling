@@ -52,7 +52,7 @@ Sequence Classification은 한 Sequence가 라벨 개수만큼의 확률을 계�
 기존에 파인 튜닝의 경우 Linear (단순 선형 회귀)만을 사용한 형태이다.
 파인튜닝 학습 형태인 Batch_size X Sequence_lenth X Embedding_size를 이해한다면 LSTM, CNN 등 다른 신경망 layer를 통과시켜서 파인튜닝을 해볼 수 있다.
 
-<pre><code>
+<code>
 class ElectraClassificationHead(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -69,7 +69,7 @@ class ElectraClassificationHead(nn.Module):
         x = self.out_proj(x)
         return x 
 
-</code></pre>
+</code>
 
 
 
