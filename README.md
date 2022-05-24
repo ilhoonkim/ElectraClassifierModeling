@@ -67,6 +67,5 @@ class ElectraClassificationHead(nn.Module):
         x = self.dropout(x)
         x = self.out_proj(x)
         return x
-'''
 
 **modeling_electra.py** 파일 참조
