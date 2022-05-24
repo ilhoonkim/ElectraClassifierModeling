@@ -73,7 +73,7 @@ class ElectraClassificationHead(nn.Module):
 self.classifier = ElectraClassificationHead() 이고, logits = self.classifier(sequence_output)의 형태로 학습하는데 해당 ElectraClassificationHead의 
 신경망 구조를 변경하면 다른 신경망 형태로 파인튜닝을 시도해볼 수 있다.
 
-### CNN으로 신경망 
+### CNN으로 신경망 변경하기
 
 
 **modeling_electra.py** 파일 참조
