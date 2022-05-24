@@ -53,6 +53,7 @@ Sequence Classification은 한 Sequence가 라벨 개수만큼의 확률을 계�
 파인튜닝 학습 형태인 Batch_size X Sequence_lenth X Embedding_size를 이해한다면 LSTM, CNN 등 다른 신경망 layer를 통과시켜서 파인튜닝을 해볼 수 있다.
 
 '''
+
 class ElectraClassificationHead(nn.Module):
     def __init__(self, config):
         super().__init__()
@@ -68,5 +69,6 @@ class ElectraClassificationHead(nn.Module):
         x = self.dropout(x)
         x = self.out_proj(x)
         return x 
+        
 '''
 **modeling_electra.py** 파일 참조
