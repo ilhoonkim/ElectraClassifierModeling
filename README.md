@@ -19,17 +19,24 @@ model의 마지막 hidden_state는 model에 input을 넣은 결과 튜플의 첫
 하이퍼파라미터를 통해 최대 문장 길이를 128, Pretrain model을 Base 모델로 사용하여 Embedding size가 768이라고 가정한다면, 
 해당 문장은 128 x 768의 사이즈를 가지게 된다.
 
-하지만 Transformer 계열의 모델에서 sequence 임베딩 정보를 output으로 만들 시에 재미있는 점이 있다.
+
+### Sequence Classification 학습 구조
+Transformer 계열의 모델에서 sequence 임베딩 정보를 output으로 만들 시에 재미있는 점이 있다.
 바로 문장 가장 앞에 오는 특수 토큰인 [CLS]에 해당 문장의 모든 임베딩 정보가 담긴다는 것이다. 
+그래서 x = last_hidden_state[:, 0, :] 의 형태를 가진다.
 
 ![image](https://user-images.githubusercontent.com/45644085/169959711-e4f05225-6422-4861-b194-4b10b2af27d8.png)
 
 따라서 한 문장 임베딩값의 형태는 다음과 같이 Embedding size이다.
-파인튜닝에서는 Embedding size를 Linear를 통해 label 개수대로 확률을 계산하면 되는 일이다.
+파인튜닝에서는 Embedding size를 Linear를 통해 label 개수대로 학습 시킨 후 확률을 계산하면 되는 일이다.
 
 만약 긍부정 이진 분류라면 다음과 같은 형태일 것이다.
 ![image](https://user-images.githubusercontent.com/45644085/169960741-34d3e0f4-44e0-4ee7-b370-403df899235d.png)
 
 해당 형태를 컴퓨팅 사양에 맞게 batch size만큼 수행하는 것이 문장 분류 파인튜닝이다. 
+
+### Question_Answering 학습 구조
+일반적인 Sequence Classification과는 달리 나머지 파인튜닝의 경우는 [CLS]토큰이 아닌 모든 토큰의 임베딩을 사용한다.
+이유를 
 
 **modeling_electra.py** 파일 참조
