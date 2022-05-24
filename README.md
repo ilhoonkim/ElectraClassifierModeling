@@ -43,6 +43,7 @@ Sequence Classification은 한 Sequence가 라벨 개수만큼의 확률을 계�
 그러므로 모든 토큰의 개수(sequence length)가 각각 2개의 확률을 가지므로 Linear output 형태가 (sequence_length X 2)가 되는 것이다.
 
 학습 형태를 그림으로 설명하자면 다음과 같을 것이다.
+
 ![image](https://user-images.githubusercontent.com/45644085/169963905-c4742d74-fab1-4a38-b390-c20794ec3f6b.png)
 
 (sequence length x 768) x Linear(768 X2)  = sequence length x 2 가 되는 간단한 구조이다.
