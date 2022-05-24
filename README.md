@@ -19,7 +19,11 @@ model의 마지막 hidden_state는 model에 input을 넣은 결과 튜플의 첫
 하이퍼파라미터를 통해 최대 문장 길이를 128, Pretrain model을 Base 모델로 사용하여 Embedding size가 768이라고 가정한다면, 
 해당 문장은 128 x 768의 사이즈를 가지게 된다.
 
+하지만 Transformer 계열의 모델에서 sequence 임베딩 정보를 output으로 만들 시에 재미있는 점이 있다.
+바로 문장 가장 앞에 오는 특수 토큰인 [CLS]에 해당 문장의 모든 임베딩 정보가 담긴다는 것이다. 
 
+![image](https://user-images.githubusercontent.com/45644085/169959711-e4f05225-6422-4861-b194-4b10b2af27d8.png)
+따라서 한 문장 임베딩값의 형태는 다음과 같다. 
 
 
 
