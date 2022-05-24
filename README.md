@@ -48,7 +48,7 @@ Sequence Classification은 한 Sequence가 라벨 개수만큼의 확률을 계�
 
 (sequence length x 768) x Linear(768 X2)  = sequence length x 2 가 되는 간단한 구조이다.
  
-## 학습 layer 변경해보기 
+## 학습 신경망 layer 변경해보기 
 기존에 파인 튜닝의 경우 Linear (단순 선형 회귀)만을 사용한 형태이다.
 파인튜닝 학습 형태인 Batch_size X Sequence_lenth X Embedding_size를 이해한다면 LSTM, CNN 등 다른 신경망 layer를 통과시켜서 파인튜닝을 해볼 수 있다.
 
@@ -70,6 +70,10 @@ class ElectraClassificationHead(nn.Module):
         return x
 ~~~
 
+self.classifier = ElectraClassificationHead() 이고, logits = self.classifier(sequence_output)의 형태로 학습하는데 해당 ElectraClassificationHead의 
+신경망 구조를 변경하면 다른 신경망 형태로 파인튜닝을 시도해볼 수 있다.
+
+### CNN으로 신경망 
 
 
 **modeling_electra.py** 파일 참조
