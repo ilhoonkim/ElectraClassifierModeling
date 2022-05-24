@@ -37,6 +37,10 @@ Transformer 계열의 모델에서 sequence 임베딩 정보를 output으로 만
 
 ### Question_Answering 학습 구조
 일반적인 Sequence Classification과는 달리 나머지 파인튜닝의 경우는 [CLS]토큰이 아닌 모든 토큰의 임베딩을 사용한다.
-이유를 
+어렵게 이유를 생각할 필요는 없다. output 형태가 (sequence_length X 2)가 되어야 하기 때문이다.
+기계독해 학습의 경우는 각 토큰이 답의 시작(start_logits), 답의 끝(end_logits)이 될 확률을 계산하여 답의 시작이 되는 토큰과 답의 끝이 되는 토큰을 찾는 것이다.
+그러므로 모든 토큰의 개수(sequence length)가 각각 2개의 확률을 가지므로 output 형태가 (sequence_length X 2)가 되는 것이다.
+![image](https://user-images.githubusercontent.com/45644085/169963905-c4742d74-fab1-4a38-b390-c20794ec3f6b.png)
+
 
 **modeling_electra.py** 파일 참조
