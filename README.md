@@ -68,6 +68,7 @@ class ElectraClassificationHead(nn.Module):
         x = self.dropout(x)
         x = self.out_proj(x)
         return x 
+
 </code></pre>
 
 
