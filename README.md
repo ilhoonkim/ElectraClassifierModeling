@@ -3,7 +3,7 @@ SequenceClassification, TokenClassification 학습 시 기존 Dense/linear 를 C
 
 ## Classifier Fine-tuning의 이해
 ### 학습 형태의 이해
-![image](https://user-images.githubusercontent.com/45644085/169935670-b0359798-fe13-41f4-b985-d2b70452d178.png)
+![image](https://user-images.githubusercontent.com/45644085/169961174-e0e7d772-fdb4-4d51-a67a-fd6c7c692cbc.png)
 
 분류를 위한 학습 시 에 Electra, Bert 모델을 통해 임베딩되어 Linear 를 태우기 전의 형태는 Batch_size X Sequence_lenth X Embedding_size와 같다.
 
