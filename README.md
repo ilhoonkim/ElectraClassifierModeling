@@ -135,5 +135,10 @@ class ElectraBiLSTMClassificationHead(nn.Module):
         return x    
 ~~~
 
+LSTM 신경망의 경우에 LSTM layer에 입력되는 input 형태가 조금 생소하다. (x, (h_1,c_1)
+이는 아래의 그림을 통해 설명이 가능하다.
+
+![image](https://user-images.githubusercontent.com/45644085/170164389-08400245-926e-4b44-8ef2-ed4bd811ef08.png)
+
 
 **modeling_electra.py** 파일 참조
