@@ -144,6 +144,7 @@ LSTM layer는 input과 이전의 단계의 hidden(h)과 cell(c)값을 다음 lay
 그러므로 초기 hidden과 cell값을 h_1, c_1으로 함께 넣어주면 된다.
 
 ![image](https://user-images.githubusercontent.com/45644085/170165559-11736f39-f6ff-4b81-ba2f-04fbc5c02a47.png)
+
 전체적인 LSTM layer의 형태는 다음과 같을 것이며 output, (hn, cn) 형태로 출력되는데 output(all the hidden states outputs)의 마지막 state를 가져와서 사용하기 위하여
 out[:,-1,:]과 같이 마지막 state만 가져와서 FC layer에 넣어도 되고 hn을 그대로 FC layer에 넣어도 무방해보인다. 
 
