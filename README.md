@@ -75,5 +75,7 @@ self.classifier = ElectraClassificationHead() 이고, logits = self.classifier(s
 
 ### CNN으로 신경망 변경하기
 
+CNN 신경망 레이어를 그림으로 쉽게 설명하자면 아래와 같다.
+![image](https://user-images.githubusercontent.com/45644085/170154390-0c9a56af-6ae1-47ae-88de-2ffff35fb52a.png)
 
 **modeling_electra.py** 파일 참조
