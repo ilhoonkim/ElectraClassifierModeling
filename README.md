@@ -1,5 +1,5 @@
 # ElectraClassifierModeling
-SequenceClassification, TokenClassification 학습 시 기존 Dense/linear 를 CNN/LSTM 으로 변경하여 테스트
+SequenceClassification, TokenClassification 학습 시 기존 단순 Linear FC layer를 CNN/LSTM 으로 변경하여 테스트
 
 ## Classifier Fine-tuning의 이해
 ### 학습 형태의 이해
