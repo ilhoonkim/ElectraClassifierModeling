@@ -147,7 +147,7 @@ LSTM layer는 input과 이전의 단계의 hidden(h)과 cell(c)값을 다음 lay
 
 전체적인 LSTM layer의 형태는 다음과 같을 것이며 output, (hn, cn) 형태로 출력되는데 output(all the hidden states outputs)의 마지막 state를 가져와서 사용하기 위하여
 out[:,-1,:]과 같이 마지막 state만 가져와서 FC layer에 넣어도 되고 hn을 그대로 FC layer에 넣어도 무방해보인다. 
-
+biLstm은 양 방향에서 정보를 가져와서 담아서 out hidden size는 기존의 2배가 된다.
 
 
 **modeling_electra.py** 파일 참조
