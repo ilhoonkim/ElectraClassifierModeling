@@ -112,4 +112,28 @@ class ElectraCnnClassificationHead(nn.Module):
 해당 Tensor를 Maxpooling layer를 통과시키면서 (Sequence length-1) X 1 의 필터를 주면 최종적으로는 Out channel 사이즈만큼의 Tensor가 남게 된다.
 최종적으로는 이 Out channel 사이즈를 라벨 개수만큼 줄여주는 FC lyaer를 통과시키면 원하는 파인튜닝이 된다.
 
+### BiLSTTM으로 신경망 변경하기
+LSTM을 신경망으로도 변경이 가능하며 변경된 코드는 다음과 같다.
+~~~
+class ElectraBiLSTMClassificationHead(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        self.hidden_size = config.hidden_size
+        self.dense = nn.Linear(config.hidden_size, config.hidden_size)
+        self.dropout = nn.Dropout(config.hidden_dropout_prob)
+        self.LSTM = nn.LSTM(input_size=config.hidden_size, hidden_size=config.hidden_size, num_layers=1, batch_first=True, bidirectional=True)
+        self.out_proj = nn.Linear(config.hidden_size*2, config.num_labels)
+    def forward(self, features, **kwargs):
+        x = self.dropout(features) 
+        x = get_activation("gelu")(x) 
+        h_1 = torch.zeros(2, x.size(0), self.hidden_size).to(device)
+        c_1 = torch.zeros(2, x.size(0), self.hidden_size).to(device)
+        out, (hn, cn) = self.LSTM(x, (h_1,c_1)) ### input = ((batch, hidden size, input size), (h_1,c_1))
+        out = self.dropout(out)
+        final_state = out[:,-1,:]
+        x = self.out_proj(final_state)
+        return x    
+~~~
+
+
 **modeling_electra.py** 파일 참조
