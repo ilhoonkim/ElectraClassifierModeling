@@ -78,4 +78,35 @@ self.classifier = ElectraClassificationHead() 이고, logits = self.classifier(s
 CNN 신경망 레이어를 그림으로 쉽게 설명하자면 아래와 같다.
 ![image](https://user-images.githubusercontent.com/45644085/170154390-0c9a56af-6ae1-47ae-88de-2ffff35fb52a.png)
 
+~~~
+class ElectraCnnClassificationHead(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        
+        self.dropout = nn.Dropout(config.hidden_dropout_prob)
+        self.layer1 = torch.nn.Sequential(
+            torch.nn.Conv2d(in_channels=1 ,out_channels=128, kernel_size=(2, 768), stride=1),
+            torch.nn.ReLU()
+        )
+        self.layer2 = torch.nn.Sequential(
+            torch.nn.MaxPool2d(kernel_size=(31,1), stride=1),
+            torch.nn.ReLU()
+        )
+        self.out_proj = nn.Linear(128, config.num_labels)   
+        
+    def forward(self, x):
+        x = self.dropout(x)
+        x = get_activation("gelu")(x) 
+        batch_size = x.size()[0]
+        out = x.unsqueeze(1)
+        out1 = self.layer1(out)
+        out2 = self.layer2(out1)
+        out3 = self.dropout(out2)
+        out_view = out3.view(batch_size,128) 
+        out_fin = self.out_proj(out_view)
+        return out_fin
+~~~
+
+한 토큰이 가지는 임베딩이 1X768이라고 하면 Convolution layer를 통과할 때 2개의 토큰의 임베딩의 값으로 
+
 **modeling_electra.py** 파일 참조
