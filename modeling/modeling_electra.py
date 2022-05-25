@@ -819,67 +819,30 @@ class ElectraBiLSTMClassificationHead(nn.Module):
     
 class ElectraCnnClassificationHead(nn.Module):
     """Head for sentence-level classification tasks."""
-
     def __init__(self, config):
         super().__init__()
         
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
         self.layer1 = torch.nn.Sequential(
-            torch.nn.Conv2d(in_channels=1 ,out_channels=64, kernel_size=(1, 3), stride=1),
+            torch.nn.Conv2d(in_channels=1 ,out_channels=768, kernel_size=(2, 768), stride=1),
             torch.nn.ReLU()
         )
         self.layer2 = torch.nn.Sequential(
-            torch.nn.MaxPool2d(kernel_size=(64,126), stride=1),
+            torch.nn.MaxPool2d(kernel_size=(31,1), stride=1),
             torch.nn.ReLU()
         )
-        # self.layer1 = torch.nn.Sequential(
-        #     torch.nn.Conv2d(in_channels=1 ,out_channels=64, kernel_size=(1, config.hidden_size), stride=1),
-        #     torch.nn.ReLU(),
-        # )
-        # self.layer2 = torch.nn.Sequential(
-        #     torch.nn.Conv2d(in_channels=1 ,out_channels=64, kernel_size=(1,128), stride=1),
-        #     torch.nn.ReLU(),
-        # )
-        # self.layer3 = torch.nn.Sequential(
-        #     torch.nn.Conv2d(in_channels=1 ,out_channels=256, kernel_size=(1,256), stride=1),
-        #     torch.nn.ReLU(),
-        # )
-        # self.dense = nn.Linear(64, config.num_labels)
         self.out_proj = nn.Linear(config.hidden_size, config.num_labels)   
     def forward(self, x):
-        # print(x.size())
         x = self.dropout(x)
         x = get_activation("gelu")(x) 
         batch_size = x.size()[0]
         out = x.unsqueeze(1)
-        # print(out.size())
-        out_input = out.transpose(2,3)
-        out1 = self.layer1(out_input)
-        out2 = out1.transpose(1,2)
-        out3 = self.layer2(out2)
-        out3 = self.dropout(out3)
-        out_view = out3.view(batch_size,1,768,-1) # hidden size 맞추어 변경 필요
-        out_fin = out_view.view(batch_size,768)
-        out = self.out_proj(out_fin)
-        return out
-            
-    # def forward(self, x):
-    #     # print(x.size())
-    #     batch_size = x.size()[0]
-    #     out = x.unsqueeze(1)
-    #     # print(out.size())
-    #     out = self.layer1(out)
-    #     # out = torch.transpose(out,1,3)
-    #     # out = self.layer2(out)
-    #     # out = torch.transpose(out,1,3)
-    #     # out = self.layer3(out)
-    #     out = torch.transpose(out,1,2)
-    #     out = out.squeeze(3)
-    #     # print(out.size())
-    #     out = self.dense(out)
-    #     out = out.view(batch_size,256)
-    #     out = self.out_proj(out)
-    #     return out
+        out1 = self.layer1(out)
+        out2 = self.layer2(out1)
+        out3 = self.dropout(out2)
+        out_view = out3.view(batch_size,768) 
+        out_fin = self.out_proj(out_view)
+        return out_fin
 
 
 class ElectraClassificationHead(nn.Module):
