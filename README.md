@@ -107,6 +107,9 @@ class ElectraCnnClassificationHead(nn.Module):
         return out_fin
 ~~~
 
-한 토큰이 가지는 임베딩이 1X768이라고 하면 Convolution layer를 통과할 때 2개의 토큰의 임베딩의 값으로 
+한 토큰이 가지는 임베딩이 1X768이라고 하면 Convolution layer를 통과할 때 2개의 토큰의 임베딩의 값 크기만큼 필터를 주어서 통과시키고 임의의   out channel 개수를 지정해준다.
+그렇게 되면  Out channel X (Sequence length-1) 의 사이즈를 가지게 된다.
+해당 Tensor를 Maxpooling layer를 통과시키면서 (Sequence length-1) X 1 의 필터를 주면 최종적으로는 Out channel 사이즈만큼의 Tensor가 남게 된다.
+최종적으로는 이 Out channel 사이즈를 라벨 개수만큼 줄여주는 FC lyaer를 통과시키면 원하는 파인튜닝이 된다.
 
 **modeling_electra.py** 파일 참조
