@@ -149,5 +149,11 @@ LSTM layer는 input과 이전의 단계의 hidden(h)과 cell(c)값을 다음 lay
 out[:,-1,:]과 같이 마지막 state만 가져와서 FC layer에 넣어도 되고 hn을 그대로 FC layer에 넣어도 무방해보인다. 
 biLstm은 양 방향에서 정보를 가져와서 담아서 out hidden size는 기존의 2배가 된다.
 
+### 학습 결과 
+|FC|CNN|BiLSTM|
+|:-----|:---:|:---:|
+|0.90644|0.90642|90758|
+
+NSMC 파인튜닝 테스트 결과, 큰 차이는 없지만 BiLSTM이 근소하게 성능이 높은 것을 확인할 수 있다.
 
 **modeling_electra.py** 파일 참조
